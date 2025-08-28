@@ -7,7 +7,8 @@ import RegisterScreen from '../screens/auth/RegisterScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AuthNavigator = () => (
-  <Stack.Navigator>
+  // Add screenOptions to hide the header for all screens in this stack
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="Register" component={RegisterScreen} />
   </Stack.Navigator>

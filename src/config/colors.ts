@@ -1,10 +1,12 @@
 export default {
-  primary: '#fc5c65',   // A vibrant red/pink
-  secondary: '#4ecdc4', // A teal color
+  primary: '#EF476F',
+  secondary: '#4ecdc4',
   black: '#000',
   white: '#fff',
-  dark: '#0d0d0d',      // A dark grey for text
-  medium: '#6e6969',    // A medium grey for placeholders
-  light: '#f8f4f4',     // A light grey for input backgrounds
-  danger: '#ff5252',    // A color for error messages
+  dark: '#0c0c0c',
+  medium: '#6e6969',
+  light: '#f8f4f4',      // We will use this for the input backgrounds
+  danger: '#ff5252',
+  placeholder: '#BDBDBD',
+  screenBackground: '#f9f9f9', // <-- NEW: A very subtle off-white/grey
 };

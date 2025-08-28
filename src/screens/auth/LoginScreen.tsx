@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Alert, Image, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 import { LoginScreenProps } from '../../types/types';
 
@@ -8,8 +8,8 @@ import AppTextInput from '../../components/common/AppTextInput';
 import AppButton from '../../components/common/AppButton';
 import colors from '../../config/colors';
 
-// You'll need to add a logo image to your assets folder
-// const logo = require('../../assets/images/logo.png');
+// Make sure you have a logo image at this path
+const logo = require('../../assets/images/logo.png'); 
 
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const { login } = useAuth();
@@ -24,7 +24,6 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     setIsLoading(true);
     try {
       await login(email, password);
-      // Navigation happens automatically via AppNavigator
     } catch (error: any) {
       const message = error.response?.data?.message || "An unexpected error occurred.";
       Alert.alert("Login Failed", message);
@@ -35,34 +34,36 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
 
   return (
     <Screen style={styles.container}>
-      {/* <Image source={logo} style={styles.logo} /> */}
-      <Text style={styles.title}>Welcome Back!</Text>
+      <View style={styles.header}>
+        <Image source={logo} style={styles.logo} />
+        <Text style={styles.tagline}>Your Trusted Service Partner</Text>
+      </View>
 
-      <AppTextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        textContentType="emailAddress"
-      />
-      <AppTextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        autoCapitalize="none"
-        autoCorrect={false}
-        textContentType="password"
-      />
-      <AppButton
-        title="Login"
-        onPress={handleLogin}
-        isLoading={isLoading}
-      />
+      <View style={styles.formContainer}>
+        <AppTextInput
+          icon="email-outline" // Use the outline version of the icon
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <AppTextInput
+          icon="lock-outline" // Use the outline version of the icon
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <AppButton
+          title="Login"
+          onPress={handleLogin}
+          isLoading={isLoading}
+        />
+      </View>
+
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.registerText}>Don't have an account? Sign Up</Text>
+        <Text style={styles.registerText}>Don't have an account? <Text style={styles.boldText}>Sign Up</Text></Text>
       </TouchableOpacity>
     </Screen>
   );
@@ -70,26 +71,38 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: colors.white, // Set the main background to white
+    paddingHorizontal: 30, // Add horizontal padding to the screen
+  },
+  header: {
+    alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 60, // Push the header down from the top
+    marginBottom: 50,
   },
   logo: {
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-    marginTop: 50,
-    marginBottom: 20,
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: colors.dark,
+  tagline: {
+    fontSize: 18,
+    fontWeight: '500', // Use a slightly lighter font weight
+    color: colors.medium,
+    marginTop: 20,
+  },
+  formContainer: {
+    width: '100%',
+    marginBottom: 20, // Add space before the "Sign Up" text
   },
   registerText: {
-    color: colors.primary,
+    color: colors.medium,
     textAlign: 'center',
-    marginTop: 20,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    color: colors.primary,
   },
 });
 
