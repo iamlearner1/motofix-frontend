@@ -16,4 +16,8 @@ export const authService = {
     const response = await apiClient.post('/auth/register', { name, email, password });
     return response.data.data;
   },
+    updateProfile: async (name: string, email: string): Promise<User> => {
+    const response = await apiClient.patch('/users/me', { name, email });
+    return response.data.data;
+  },
 };

@@ -42,6 +42,7 @@ export interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+   updateUser: (newUserData: User) => Promise<void>; // <-- ADD THIS
 }
 
 // 3. Navigation

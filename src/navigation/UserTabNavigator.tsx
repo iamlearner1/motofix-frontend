@@ -16,11 +16,16 @@ import SelectVehicleScreen from '../screens/user/booking/SelectVehicleScreen';
 import MyBookingsScreen from '../screens/user/MyBookingsScreen';
 import colors from '../config/colors';
 
-
+const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
+import EditProfileScreen from '../screens/user/EditProfileScreen';
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const GarageStack = createNativeStackNavigator<GarageStackParamList>();
 const Tab = createBottomTabNavigator();
 
+export type ProfileStackParamList = {
+  ProfileView: undefined;
+  EditProfile: undefined;
+};
 // This component manages the screens for the booking flow
 const HomeNavigator = () => (
   <HomeStack.Navigator>
@@ -69,6 +74,19 @@ const GarageNavigator = () => (
   </GarageStack.Navigator>
 );
 
+const ProfileNavigator = () => (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+      name="ProfileView"
+      component={ProfileScreen}
+    />
+    <ProfileStack.Screen
+      name="EditProfile"
+      component={EditProfileScreen}
+      options={{ title: 'Edit Profile' }}
+    />
+  </ProfileStack.Navigator>
+);
 
 // --- The Main User Tab Navigator ---
 const UserTabNavigator = () => (
@@ -99,7 +117,7 @@ const UserTabNavigator = () => (
     <Tab.Screen name="HomeFlow" component={HomeNavigator} options={{ title: 'Home' }} />
     <Tab.Screen name="MyBookings" component={MyBookingsScreen} options={{ title: 'My Bookings', headerShown: true }} />
     <Tab.Screen name="GarageFlow" component={GarageNavigator} options={{ title: 'My Garage' }} />
-    <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile', headerShown: true }} />
+    <Tab.Screen name="Profile" component={ProfileNavigator} options={{ title: 'Profile', headerShown: false }} />
   </Tab.Navigator>
 );
 export default UserTabNavigator;

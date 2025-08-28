@@ -46,9 +46,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     delete apiClient.defaults.headers.common['Authorization'];
     await AsyncStorage.multiRemove(['userToken', 'userData']);
   };
+    const updateUser = async (newUserData: User) => {
+    setUser(newUserData);
+    await AsyncStorage.setItem('userData', JSON.stringify(newUserData));
+  };
 
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, login, logout,updateUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import Screen from '../../components/common/Screen';
 import AppButton from '../../components/common/AppButton';
 import colors from '../../config/colors';
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }: any) => {
     // Get the user object and logout function from our global context
     const { user, logout } = useAuth();
     return (
@@ -17,6 +17,12 @@ const ProfileScreen = () => {
                 <Text style={styles.nameText}>{user?.name}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
             </View>
+             <View style={styles.buttonContainer}>
+        <AppButton
+          title="Edit Profile"
+          onPress={() => navigation.navigate('EditProfile')}
+        />
+      </View>
             <View style={styles.logoutButtonContainer}>
                 <AppButton
                     title="Logout"
@@ -65,5 +71,9 @@ const styles = StyleSheet.create({
         marginTop: 'auto',
         padding: 20,
     },
+      buttonContainer: {
+    paddingHorizontal: 20,
+    marginTop: 30,
+  },
 });
 export default ProfileScreen;
