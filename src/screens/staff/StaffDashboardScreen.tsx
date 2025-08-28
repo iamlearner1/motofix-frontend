@@ -53,10 +53,10 @@ const StaffDashboardScreen = () => {
   };
   
   const renderBookingCard = ({ item }: { item: StaffBooking }) => (
-    <Card
-      title={`${item.vehicle.vehicleInfo.brand} ${item.vehicle.vehicleInfo.model}`}
-      subTitle={item.vehicle.registrationNumber}
-    >
+  <Card
+  title={`${item.vehicle.vehicleInfo.brand} ${item.vehicle.vehicleInfo.model}`}
+  subTitle={item.vehicle.registrationNumber}
+>
       <View style={styles.cardContent}>
         <Text style={styles.detailText}>Customer: {item.customer.name}</Text>
         <Text style={styles.detailText}>Date: {new Date(item.slotDate).toLocaleDateString()} at {item.slotTime}</Text>
