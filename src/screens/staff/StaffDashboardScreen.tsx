@@ -115,8 +115,7 @@ const StaffDashboardScreen = ({ navigation }: any) => {
           ListEmptyComponent={<Text style={styles.emptyText}>No bookings match the current filter.</Text>}
           contentContainerStyle={{ paddingHorizontal: 10 }}
         />
-      )}
-      <AppButton title="Logout" onPress={logout} style={{ backgroundColor: colors.medium, marginHorizontal: 10 }}/>
+      )} 
     </Screen>
   );
 };
