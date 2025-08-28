@@ -13,6 +13,13 @@ export type GarageStackParamList = {
   AddVehicle: undefined;
 };
 
+export type HomeStackParamList = {
+  UserHome: undefined;
+  SelectLocation: undefined;
+  // SelectServices: { location: Location }; // Example for the next step
+  // ... other booking wizard screens
+};
+
 export interface User {
   _id: string;
   name: string;
