@@ -1,5 +1,6 @@
 import apiClient from '../api/apiClient';
 import { User } from '../types/types'; // Reuse the main User type
+import { Booking } from './bookingService';
 
 // This is the data needed to create a new staff member
 interface NewStaffPayload {
@@ -19,6 +20,10 @@ export const managerService = {
   // Creates a new user with the 'staff' role
   createStaffMember: async (payload: NewStaffPayload): Promise<User> => {
     const response = await apiClient.post('/users/staff', payload);
+    return response.data.data;
+  },
+    getAllBookings: async (): Promise<Booking[]> => {
+    const response = await apiClient.get('/bookings/all');
     return response.data.data;
   },
 };
