@@ -18,6 +18,7 @@ import colors from '../config/colors';
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 import EditProfileScreen from '../screens/user/EditProfileScreen';
+import ConfirmBookingScreen from '../screens/user/booking/ConfirmBookingScreen';
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const GarageStack = createNativeStackNavigator<GarageStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -54,6 +55,11 @@ const HomeNavigator = () => (
       name="SelectDateTime"
       component={SelectDateTimeScreen}
       options={{ title: 'Pick a Date & Time' }}
+    />
+     <HomeStack.Screen
+      name="ConfirmBooking"
+      component={ConfirmBookingScreen}
+      options={{ title: 'Confirm Your Booking' }}
     />
   </HomeStack.Navigator>
 );

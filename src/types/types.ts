@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Location } from '../services/locationService'; // Make sure to export this type
+import { UserVehicle } from '../services/vehicleService';
 // 1. Core Data Structures (from our backend)
 export type RoleName = 'user' | 'staff' | 'manager';
 
@@ -18,12 +19,21 @@ export type HomeStackParamList = {
   SelectVehicle: undefined;
   SelectLocation: { vehicleId: string };
   SelectServices: { vehicleId: string; location: Location };
-  SelectDateTime: { // <-- NEW
+  SelectDateTime: {
     vehicleId: string;
     locationId: string;
     selectedServices: string[];
   };
-  // ConfirmBooking: { ... }; // We'll add this very last
+  ConfirmBooking: { // <-- ADD THIS NEW SCREEN AND ITS PARAMS
+    vehicleId: string;
+    locationId: string;
+    selectedServices: string[];
+    slotDate: string;
+    slotTime: string;
+    // We can pass the full objects for display purposes
+    vehicleDetails: UserVehicle; 
+    locationDetails: Location;
+  };
 };
 export interface User {
   _id: string;
