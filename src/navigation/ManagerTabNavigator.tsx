@@ -8,6 +8,8 @@ import ManageStaffScreen from '../screens/manager/ManageStaffScreen';
 import AddStaffScreen from '../screens/manager/AddStaffScreen';
 import ManageLocationsScreen from '../screens/manager/ManageLocationsScreen'; // <-- NEW
 import AddLocationScreen from '../screens/manager/AddLocationScreen';     // <-- NEW
+import ManageServicesScreen from '../screens/manager/ManageServicesScreen';
+import AddServiceScreen from '../screens/manager/AddServiceScreen';
 // Define the screens within the "Manage Staff" stack
 export type StaffManagementStackParamList = {
   StaffList: undefined;
@@ -19,10 +21,15 @@ export type LocationManagementStackParamList = {
   AddLocation: undefined;
 };
 
+export type ServiceManagementStackParamList = {
+  ServiceList: undefined;
+  AddService: undefined;
+};
 const Stack = createNativeStackNavigator<StaffManagementStackParamList>();
 const LocationStack = createNativeStackNavigator<LocationManagementStackParamList>(); // <-- NEW STACK
 const Tab = createBottomTabNavigator();
 
+const ServiceStack = createNativeStackNavigator<ServiceManagementStackParamList>(); // <-- NEW STACK
 // Create a StackNavigator for the Staff Management flow
 // This allows navigating from the list of staff to the "add staff" form
 const StaffManagementNavigator = () => (
@@ -38,6 +45,21 @@ const StaffManagementNavigator = () => (
       options={{ title: 'Add New Staff' }} 
     />
   </Stack.Navigator>
+);
+
+const ServiceManagementNavigator = () => (
+  <ServiceStack.Navigator>
+    <ServiceStack.Screen 
+      name="ServiceList" 
+      component={ManageServicesScreen} 
+      options={{ title: 'All Services' }} 
+    />
+    <ServiceStack.Screen 
+      name="AddService" 
+      component={AddServiceScreen} 
+      options={{ title: 'Add New Service' }} 
+    />
+  </ServiceStack.Navigator>
 );
 
 const LocationManagementNavigator = () => (
@@ -74,6 +96,11 @@ const ManagerTabNavigator = () => (
       name="ManageLocationsFlow"
       component={LocationManagementNavigator}
       options={{ title: 'Manage Locations' }}
+    />
+      <Tab.Screen
+      name="ManageServicesFlow"
+      component={ServiceManagementNavigator}
+      options={{ title: 'Manage Services' }}
     />
     {/* We can add more tabs here later, like "Manage Locations" */}
   </Tab.Navigator>
