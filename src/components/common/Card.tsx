@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import colors from '../../config/colors';
 
 interface CardProps {
   title: string;
   subTitle: string;
+  children?: ReactNode; // <-- ADD THIS LINE
 }
 
-const Card: React.FC<CardProps> = ({ title, subTitle }) => {
+const Card: React.FC<CardProps> = ({ title, subTitle, children }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subTitle}>{subTitle}</Text>
+      {children} 
     </View>
   );
 };
 
+// ... styles remain the same
+// ...
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.white,
@@ -39,5 +43,6 @@ const styles = StyleSheet.create({
     color: colors.medium,
   },
 });
+
 
 export default Card;

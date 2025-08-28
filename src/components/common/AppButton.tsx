@@ -1,27 +1,34 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, StyleProp, ViewStyle } from 'react-native';
 import colors from '../../config/colors';
 
+// --- THIS IS THE UPDATED INTERFACE ---
 interface AppButtonProps {
   title: string;
   onPress: () => void;
   isLoading?: boolean;
-  disabled?: boolean; // <-- The only new prop
+  disabled?: boolean;
+  style?: StyleProp<ViewStyle>; // <-- ADD THIS LINE
 }
 
 const AppButton: React.FC<AppButtonProps> = ({
   title,
   onPress,
   isLoading = false,
-  disabled = false, // <-- The only new prop
+  disabled = false,
+  style, // <-- RECEIVE THE PROP HERE
 }) => {
-  // A button is disabled if either the isLoading flag is true or the disabled flag is true
   const isDisabled = isLoading || disabled;
 
   return (
     <TouchableOpacity
-      // The style now depends on whether the button is disabled
-      style={[styles.button, { backgroundColor: isDisabled ? colors.medium : colors.primary }]}
+      // --- THIS IS THE UPDATED STYLE PROP ---
+      // It now correctly combines the base styles with any passed-in styles
+      style={[
+        styles.button,
+        { backgroundColor: isDisabled ? colors.medium : colors.primary },
+        style // Apply the custom style last so it can override
+      ]}
       onPress={onPress}
       disabled={isDisabled}
     >
@@ -36,7 +43,8 @@ const AppButton: React.FC<AppButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.primary, // This is the default color
+    // The default backgroundColor is still here, but it can now be overridden
+    backgroundColor: colors.primary,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
