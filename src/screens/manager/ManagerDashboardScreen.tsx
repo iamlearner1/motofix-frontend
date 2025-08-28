@@ -1,41 +1,43 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
+import Screen from '../../components/common/Screen';
+import AppButton from '../../components/common/AppButton';
 
 const ManagerDashboardScreen = () => {
   const { user, logout } = useAuth();
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <Text style={styles.title}>Manager Dashboard</Text>
       <Text style={styles.welcomeText}>Welcome, {user?.name}!</Text>
-      <Text>You have administrative privileges.</Text>
+      <Text>Use the tabs below to manage your business.</Text>
       <View style={styles.buttonContainer}>
-        <Button title="Logout" onPress={logout} color="#ff6347" />
+        <AppButton title="Logout" onPress={logout} style={{ backgroundColor: '#6e6969' }} />
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  welcomeText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    marginTop: 30,
-    width: '80%',
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 40
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    welcomeText: {
+        fontSize: 18,
+        marginBottom: 20,
+    },
+    buttonContainer: {
+        marginTop: 'auto',
+        width: '100%',
+        paddingBottom: 20
+    },
 });
 
 export default ManagerDashboardScreen;
