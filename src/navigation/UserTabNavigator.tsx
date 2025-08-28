@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import UserHomeScreen from '../screens/user/UserHomeScreen';
 import MyGarageScreen from '../screens/user/garage/MyGarageScreen';
-// import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
+import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
 import { GarageStackParamList } from '../types/types';
 
 // Define the screens within the "Garage" stack
@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator();
 const GarageNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="MyGarage" component={MyGarageScreen} />
-    {/* <Stack.Screen name="AddVehicle" component={AddVehicleScreen} /> */}
+     <Stack.Screen name="AddVehicle" component={AddVehicleScreen} /> 
   </Stack.Navigator>
 );
 
