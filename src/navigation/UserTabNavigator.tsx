@@ -6,7 +6,7 @@ import SelectDateTimeScreen from '../screens/user/booking/SelectDateTimeScreen'
 import UserHomeScreen from '../screens/user/UserHomeScreen';
 import SelectLocationScreen from '../screens/user/booking/SelectLocationScreen';
 // We will add more booking screens here soon
-
+import ProfileScreen from '../screens/user/ProfileScreen' // <-- IMPORT THE NEW SCREEN
 import MyGarageScreen from '../screens/user/garage/MyGarageScreen';
 import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
 import { GarageStackParamList, HomeStackParamList } from '../types/types';
@@ -91,6 +91,15 @@ const UserTabNavigator = () => (
       options={{ 
         title: 'My Bookings',
         headerShown: true, // Show a header for this simple screen
+        headerTitleAlign: 'center',
+      }} 
+    />
+     <Tab.Screen 
+      name="Profile" 
+      component={ProfileScreen} 
+      options={{ 
+        title: 'Profile',
+        headerShown: true, // Let's give this screen a simple header
         headerTitleAlign: 'center',
       }} 
     />
