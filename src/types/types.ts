@@ -8,6 +8,11 @@ export interface Role {
   name: RoleName;
 }
 
+export type GarageStackParamList = {
+  MyGarage: undefined;
+  AddVehicle: undefined;
+};
+
 export interface User {
   _id: string;
   name: string;
