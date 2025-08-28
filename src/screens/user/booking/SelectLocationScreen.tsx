@@ -29,6 +29,8 @@ const SelectLocationScreen = ({ navigation }: any) => {
   const handleSelectLocation = (location: Location) => {
     // Navigate to the next step, passing the chosen location's data
     // We will create 'SelectServices' screen next
+     navigation.navigate('SelectServices', { location });
+    
     console.log("Selected Location:", location.name);
     // navigation.navigate('SelectServices', { location });
   };

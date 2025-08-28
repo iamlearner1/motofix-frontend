@@ -10,7 +10,7 @@ import SelectLocationScreen from '../screens/user/booking/SelectLocationScreen';
 import MyGarageScreen from '../screens/user/garage/MyGarageScreen';
 import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
 import { GarageStackParamList, HomeStackParamList } from '../types/types';
-
+import SelectServicesScreen from '../screens/user/booking/SelectServicesScreen'
 // --- Type Definitions for our Stacks ---
 // (It's good practice to define these here or in a central types file)
 
@@ -37,7 +37,12 @@ const HomeNavigator = () => (
       component={SelectLocationScreen}
       options={{ title: 'Select a Service Center' }}
     />
-    {/* We will add more screens like SelectServices here */}
+    {/* ADD THE NEW SCREEN */}
+    <HomeStack.Screen
+      name="SelectServices"
+      component={SelectServicesScreen}
+      options={{ title: 'Choose Services' }}
+    />
   </HomeStack.Navigator>
 );
 

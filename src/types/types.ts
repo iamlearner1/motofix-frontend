@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
+import { Location } from '../services/locationService'; // Make sure to export this type
 // 1. Core Data Structures (from our backend)
 export type RoleName = 'user' | 'staff' | 'manager';
 
@@ -16,10 +16,9 @@ export type GarageStackParamList = {
 export type HomeStackParamList = {
   UserHome: undefined;
   SelectLocation: undefined;
-  // SelectServices: { location: Location }; // Example for the next step
+  SelectServices: { location: Location }; // Pass the entire location object
   // ... other booking wizard screens
-};
-
+}
 export interface User {
   _id: string;
   name: string;
