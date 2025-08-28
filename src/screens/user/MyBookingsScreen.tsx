@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import Screen from '../../components/common/Screen';
 import Card from '../../components/common/Card';
 import colors from '../../config/colors';
+import { formatDisplayDate } from '../../utils/dateUtils'; // <-- IMPORT THE HELPER
 const MyBookingsScreen = () => {
     const [bookings, setBookings] = useState<UserBooking[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,11 +34,11 @@ const MyBookingsScreen = () => {
             >
                 <View style={styles.cardContent}>
                     <Text style={styles.dateText}>
-                        {new Date(item.slotDate).toLocaleDateString()} at {item.slotTime}
-                    </Text>
+            {formatDisplayDate(item.slotDate)} at {item.slotTime}
+          </Text>
                     <View style={[styles.statusContainer, { backgroundColor: isCompleted ? colors.medium : colors.secondary }]}>
-                        <Text style={styles.statusText}>{item.status}</Text>
-                    </View>
+            <Text style={styles.statusText}>{item.status}</Text>
+          </View>
                 </View>
             </Card>
         );
