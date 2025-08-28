@@ -1,13 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { bookingService, UserBooking } from '../../services/bookingService';
 import { useAuth } from '../../context/AuthContext';
+
 import Screen from '../../components/common/Screen';
 import Card from '../../components/common/Card';
 import colors from '../../config/colors';
 import { formatDisplayDate } from '../../utils/dateUtils'; // <-- IMPORT THE HELPER
-const MyBookingsScreen = () => {
+const MyBookingsScreen = ({ navigation }: any) => {
     const [bookings, setBookings] = useState<UserBooking[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -25,22 +26,26 @@ const MyBookingsScreen = () => {
         }
     };
     useFocusEffect(useCallback(() => { loadBookings(); }, []));
-    const renderBookingCard = ({ item }: { item: UserBooking }) => {
+     const renderBookingCard = ({ item }: { item: UserBooking }) => {
         const isCompleted = item.status === 'Completed' || item.status === 'Cancelled';
+        
         return (
-            <Card
-                title={item.location.name}
-                subTitle={item.vehicle.registrationNumber}
-            >
-                <View style={styles.cardContent}>
-                    <Text style={styles.dateText}>
-            {formatDisplayDate(item.slotDate)} at {item.slotTime}
-          </Text>
-                    <View style={[styles.statusContainer, { backgroundColor: isCompleted ? colors.medium : colors.secondary }]}>
-            <Text style={styles.statusText}>{item.status}</Text>
-          </View>
-                </View>
-            </Card>
+            // 1. Wrap the entire Card in a TouchableOpacity
+            <TouchableOpacity onPress={() => navigation.navigate('BookingDetails', { booking: item })}>
+                <Card
+                    title={item.location.name}
+                    subTitle={item.vehicle.registrationNumber}
+                >
+                    <View style={styles.cardContent}>
+                        <Text style={styles.dateText}>
+                            {formatDisplayDate(item.slotDate)} at {item.slotTime}
+                        </Text>
+                        <View style={[styles.statusContainer, { backgroundColor: isCompleted ? colors.medium : colors.secondary }]}>
+                            <Text style={styles.statusText}>{item.status}</Text>
+                        </View>
+                    </View>
+                </Card>
+            </TouchableOpacity>
         );
     };
     if (isLoading) {

@@ -32,6 +32,7 @@ export interface UserBooking {
   slotDate: string;
   slotTime: string;
   status: 'Confirmed' | 'In-Progress' | 'Completed' | 'Cancelled';
+   issueDescription?: string; // <-- ADD THIS LINE
 }
 
 

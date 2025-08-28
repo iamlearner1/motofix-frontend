@@ -19,6 +19,8 @@ import colors from '../config/colors';
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 import EditProfileScreen from '../screens/user/EditProfileScreen';
 import ConfirmBookingScreen from '../screens/user/booking/ConfirmBookingScreen';
+import { UserBooking } from '../services/bookingService';
+import UserBookingDetailScreen from '../screens/user/UserBookingDetailScreen';
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const GarageStack = createNativeStackNavigator<GarageStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,26 @@ export type ProfileStackParamList = {
   ProfileView: undefined;
   EditProfile: undefined;
 };
+const BookingsStack = createNativeStackNavigator<BookingsStackParamList>();
+export type BookingsStackParamList = {
+  BookingsList: undefined;
+  BookingDetails: { booking: UserBooking }; // Pass the booking object
+};
+
+const BookingsNavigator = () => (
+  <BookingsStack.Navigator>
+    <BookingsStack.Screen
+      name="BookingsList"
+      component={MyBookingsScreen}
+      options={{ title: 'My Bookings',headerShown:false }}
+    />
+    <BookingsStack.Screen
+      name="BookingDetails"
+      component={UserBookingDetailScreen}
+      options={{ title: 'Booking Details',  }}
+    />
+  </BookingsStack.Navigator>
+);
 // This component manages the screens for the booking flow
 const HomeNavigator = () => (
   <HomeStack.Navigator>
@@ -121,7 +143,7 @@ const UserTabNavigator = () => (
     })}
   >
     <Tab.Screen name="HomeFlow" component={HomeNavigator} options={{ title: 'Home' }} />
-    <Tab.Screen name="MyBookings" component={MyBookingsScreen} options={{ title: 'My Bookings', headerShown: true }} />
+    <Tab.Screen name="MyBookings" component={BookingsNavigator} options={{ title: 'My Bookings', headerShown: true }} />
     <Tab.Screen name="GarageFlow" component={GarageNavigator} options={{ title: 'My Garage' }} />
     <Tab.Screen name="Profile" component={ProfileNavigator} options={{ title: 'Profile', headerShown: false }} />
   </Tab.Navigator>
