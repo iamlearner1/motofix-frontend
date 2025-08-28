@@ -19,6 +19,8 @@ export const bookingService = {
   // Create a new booking
   createBooking: async (bookingData: NewBookingData): Promise<Booking> => {
     const response = await apiClient.post('/bookings', bookingData);
+    console.log(response);
+    
     return response.data.data;
   },
 

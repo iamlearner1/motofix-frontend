@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import { locationService, Location } from '../../../services/locationService';
+// Import the navigation types
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../types/types';
 
 import Screen from '../../../components/common/Screen';
 import Card from '../../../components/common/Card';
 import colors from '../../../config/colors';
 
-const SelectLocationScreen = ({ navigation }: any) => {
+// Use the correct type for the screen's props
+type Props = NativeStackScreenProps<RootStackParamList, 'SelectLocation'>;
+
+const SelectLocationScreen = ({ route, navigation }: Props) => {
+  // --- THIS IS THE KEY ---
+  // We correctly receive the vehicleId from the previous screen
+   const vehicleId = route.params?.vehicleId;
+
   const [locations, setLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,7 +28,6 @@ const SelectLocationScreen = ({ navigation }: any) => {
         setLocations(data);
       } catch (err) {
         setError("Could not load service locations.");
-        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -27,12 +36,18 @@ const SelectLocationScreen = ({ navigation }: any) => {
   }, []);
 
   const handleSelectLocation = (location: Location) => {
-    // Navigate to the next step, passing the chosen location's data
-    // We will create 'SelectServices' screen next
-     navigation.navigate('SelectServices', { location });
-    
-    console.log("Selected Location:", location.name);
-    // navigation.navigate('SelectServices', { location });
+    // This check ensures we don't navigate forward if the vehicleId is somehow missing
+    if (!vehicleId) {
+      console.error("Error: vehicleId is missing, cannot proceed.");
+      // Optionally, show an alert to the user and navigate back
+      // Alert.alert("Error", "Could not find selected vehicle. Please try again.");
+      // navigation.goBack();
+      return;
+    }
+    navigation.navigate('SelectServices', { 
+      vehicleId: vehicleId, // <-- Pass it on!
+      location: location,
+    });
   };
 
   if (isLoading) {

@@ -14,7 +14,7 @@ const UserHomeScreen = ({ navigation }: any) => {
       </View>
       <AppButton
         title="Book a New Service"
-        onPress={() => navigation.navigate('SelectLocation')}
+     onPress={() => navigation.navigate('SelectVehicle')}
       />
       <View style={{ marginTop: 'auto', marginBottom: 20 }}>
         <AppButton title="Logout" onPress={logout} />

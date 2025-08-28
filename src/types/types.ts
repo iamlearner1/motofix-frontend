@@ -15,10 +15,16 @@ export type GarageStackParamList = {
 
 export type HomeStackParamList = {
   UserHome: undefined;
-  SelectLocation: undefined;
-  SelectServices: { location: Location }; // Pass the entire location object
-  // ... other booking wizard screens
-}
+  SelectVehicle: undefined;
+  SelectLocation: { vehicleId: string };
+  SelectServices: { vehicleId: string; location: Location };
+  SelectDateTime: { // <-- NEW
+    vehicleId: string;
+    locationId: string;
+    selectedServices: string[];
+  };
+  // ConfirmBooking: { ... }; // We'll add this very last
+};
 export interface User {
   _id: string;
   name: string;
@@ -41,16 +47,36 @@ export interface AuthContextType {
 // 3. Navigation
 // Defines all the screens in our app
 export type RootStackParamList = {
-  // Navigators
+  // Main Navigators
   Auth: undefined;
   UserApp: undefined;
   StaffApp: undefined;
   ManagerApp: undefined;
 
-  // Screens
+  // Auth Screens
   Login: undefined;
   Register: undefined;
-};
 
+  // User Tab Navigators
+  HomeFlow: undefined; // The entire home tab stack
+  GarageFlow: undefined; // The entire garage tab stack
+
+  // Screens within HomeFlow
+  UserHome: undefined;
+  SelectVehicle: undefined;
+  SelectLocation: { vehicleId: string };
+  SelectServices: { vehicleId: string; location: Location };
+  SelectDateTime: {
+    vehicleId: string;
+    locationId: string;
+    selectedServices: string[];
+  };
+
+  // Screens within GarageFlow
+  MyGarage: undefined;
+  AddVehicle: undefined;
+};
 // Type prop for a screen, e.g., for the Login screen:
 export type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
+export type SelectServicesScreenProps = NativeStackScreenProps<RootStackParamList, 'SelectServices'>;
+export type SelectDateTimeScreenProps = NativeStackScreenProps<RootStackParamList, 'SelectDateTime'>;

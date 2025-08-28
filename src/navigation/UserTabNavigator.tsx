@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import SelectDateTimeScreen from '../screens/user/booking/SelectDateTimeScreen'
 // Import all the screens we need for both flows
 import UserHomeScreen from '../screens/user/UserHomeScreen';
 import SelectLocationScreen from '../screens/user/booking/SelectLocationScreen';
@@ -11,6 +11,7 @@ import MyGarageScreen from '../screens/user/garage/MyGarageScreen';
 import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
 import { GarageStackParamList, HomeStackParamList } from '../types/types';
 import SelectServicesScreen from '../screens/user/booking/SelectServicesScreen'
+import SelectVehicleScreen from '../screens/user/booking/SelectVehicleScreen';
 // --- Type Definitions for our Stacks ---
 // (It's good practice to define these here or in a central types file)
 
@@ -32,6 +33,11 @@ const HomeNavigator = () => (
       component={UserHomeScreen} 
       options={{ title: 'Welcome' }} 
     />
+        <HomeStack.Screen
+      name="SelectVehicle" // <-- ADD THIS SCREEN
+      component={SelectVehicleScreen}
+      options={{ title: 'Select Your Vehicle' }}
+    />
     <HomeStack.Screen
       name="SelectLocation"
       component={SelectLocationScreen}
@@ -42,6 +48,11 @@ const HomeNavigator = () => (
       name="SelectServices"
       component={SelectServicesScreen}
       options={{ title: 'Choose Services' }}
+    />
+       <HomeStack.Screen
+      name="SelectDateTime"
+      component={SelectDateTimeScreen}
+      options={{ title: 'Pick a Date & Time' }}
     />
   </HomeStack.Navigator>
 );
