@@ -6,14 +6,21 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ManagerDashboardScreen from '../screens/manager/ManagerDashboardScreen';
 import ManageStaffScreen from '../screens/manager/ManageStaffScreen';
 import AddStaffScreen from '../screens/manager/AddStaffScreen';
-
+import ManageLocationsScreen from '../screens/manager/ManageLocationsScreen'; // <-- NEW
+import AddLocationScreen from '../screens/manager/AddLocationScreen';     // <-- NEW
 // Define the screens within the "Manage Staff" stack
 export type StaffManagementStackParamList = {
   StaffList: undefined;
   AddStaff: undefined;
 };
 
+export type LocationManagementStackParamList = {
+  LocationList: undefined;
+  AddLocation: undefined;
+};
+
 const Stack = createNativeStackNavigator<StaffManagementStackParamList>();
+const LocationStack = createNativeStackNavigator<LocationManagementStackParamList>(); // <-- NEW STACK
 const Tab = createBottomTabNavigator();
 
 // Create a StackNavigator for the Staff Management flow
@@ -33,6 +40,21 @@ const StaffManagementNavigator = () => (
   </Stack.Navigator>
 );
 
+const LocationManagementNavigator = () => (
+  <LocationStack.Navigator>
+    <LocationStack.Screen 
+      name="LocationList" 
+      component={ManageLocationsScreen} 
+      options={{ title: 'All Service Locations' }} 
+    />
+    <LocationStack.Screen 
+      name="AddLocation" 
+      component={AddLocationScreen} 
+      options={{ title: 'Add New Location' }} 
+    />
+  </LocationStack.Navigator>
+);
+
 // This is the main Tab Navigator for the Manager role
 const ManagerTabNavigator = () => (
   <Tab.Navigator screenOptions={{ 
@@ -47,6 +69,11 @@ const ManagerTabNavigator = () => (
       name="ManageStaffFlow"
       component={StaffManagementNavigator}
       options={{ title: 'Manage Staff' }} // This is the text on the tab button
+    />
+      <Tab.Screen
+      name="ManageLocationsFlow"
+      component={LocationManagementNavigator}
+      options={{ title: 'Manage Locations' }}
     />
     {/* We can add more tabs here later, like "Manage Locations" */}
   </Tab.Navigator>
