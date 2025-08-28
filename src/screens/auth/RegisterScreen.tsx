@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert, Button, Text } from 'react-native';
-import { authService } from '../../services/authService';
+import { StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
-// Replace these with your custom components later
-// import AppButton from '../../components/common/AppButton';
-// import AppTextInput from '../../components/common/AppTextInput';
+import { authService } from '../../services/authService';
+
+import Screen from '../../components/common/Screen';
+import AppTextInput from '../../components/common/AppTextInput';
+import AppButton from '../../components/common/AppButton';
+import colors from '../../config/colors';
 
 const RegisterScreen = ({ navigation }: any) => {
-  const { login } = useAuth(); // We'll log the user in right after they register
+  const { login } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,19 +17,15 @@ const RegisterScreen = ({ navigation }: any) => {
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
-      Alert.alert("Error", "Please fill in all fields.");
-      return;
+      return Alert.alert("Validation Error", "Please fill in all fields.");
     }
-
     setIsLoading(true);
     try {
       await authService.register(name, email, password);
-      // After successful registration, automatically log them in
+      // If registration is successful, automatically log the new user in
       await login(email, password);
-      // Navigation to the user's home screen will happen automatically
     } catch (error: any) {
-      // The error object might have response data from the server
-      const message = error.response?.data?.message || "An unknown error occurred.";
+      const message = error.response?.data?.message || "An unexpected error occurred.";
       Alert.alert("Registration Failed", message);
     } finally {
       setIsLoading(false);
@@ -35,47 +33,57 @@ const RegisterScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create a New Account</Text>
-      {/* Replace these with your AppTextInput components */}
-      <View style={styles.input}><Text>TODO: Name Input</Text></View>
-      <View style={styles.input}><Text>TODO: Email Input</Text></View>
-      <View style={styles.input}><Text>TODO: Password Input</Text></View>
-      <Button
-        title={isLoading ? "Registering..." : "Register"}
+    <Screen style={styles.container}>
+      <Text style={styles.title}>Create Account</Text>
+
+      <AppTextInput
+        placeholder="Full Name"
+        value={name}
+        onChangeText={setName}
+        autoCorrect={false}
+      />
+      <AppTextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <AppTextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        autoCapitalize="none"
+      />
+      <AppButton
+        title="Register"
         onPress={handleRegister}
-        disabled={isLoading}
+        isLoading={isLoading}
       />
-      <Button
-        title="Back to Login"
-        onPress={() => navigation.goBack()}
-        color="#888"
-      />
-    </View>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={styles.loginText}>Already have an account? Login</Text>
+      </TouchableOpacity>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    color: colors.dark,
   },
-  // Placeholder style for inputs
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 15,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+  loginText: {
+    color: colors.primary,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 
