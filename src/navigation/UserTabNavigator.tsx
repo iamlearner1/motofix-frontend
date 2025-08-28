@@ -6,6 +6,7 @@ import SelectDateTimeScreen from '../screens/user/booking/SelectDateTimeScreen'
 import UserHomeScreen from '../screens/user/UserHomeScreen';
 import SelectLocationScreen from '../screens/user/booking/SelectLocationScreen';
 // We will add more booking screens here soon
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfileScreen from '../screens/user/ProfileScreen' // <-- IMPORT THE NEW SCREEN
 import MyGarageScreen from '../screens/user/garage/MyGarageScreen';
 import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
@@ -13,6 +14,7 @@ import { GarageStackParamList, HomeStackParamList } from '../types/types';
 import SelectServicesScreen from '../screens/user/booking/SelectServicesScreen'
 import SelectVehicleScreen from '../screens/user/booking/SelectVehicleScreen';
 import MyBookingsScreen from '../screens/user/MyBookingsScreen';
+import colors from '../config/colors';
 
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -69,42 +71,35 @@ const GarageNavigator = () => (
 
 
 // --- The Main User Tab Navigator ---
-
 const UserTabNavigator = () => (
-  <Tab.Navigator screenOptions={{ 
-      // Hide the header for the tab navigator itself, as each stack has its own header
-      headerShown: false 
-    }}>
-    <Tab.Screen 
-      name="HomeFlow" // Use a different name for the route
-      component={HomeNavigator} 
-      options={{ title: 'Home' }} // This is the label on the tab button
-    />
-    <Tab.Screen 
-      name="GarageFlow" // Use a different name for the route
-      component={GarageNavigator} 
-      options={{ title: 'My Garage' }} // This is the label on the tab button
-    />
-      <Tab.Screen 
-      name="MyBookings" 
-      component={MyBookingsScreen} 
-      options={{ 
-        title: 'My Bookings',
-        headerShown: true, // Show a header for this simple screen
-        headerTitleAlign: 'center',
-      }} 
-    />
-     <Tab.Screen 
-      name="Profile" 
-      component={ProfileScreen} 
-      options={{ 
-        title: 'Profile',
-        headerShown: true, // Let's give this screen a simple header
-        headerTitleAlign: 'center',
-      }} 
-    />
-    {/* Add "My Bookings" and "Profile" tabs here later */}
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarActiveTintColor: colors.primary,
+      tabBarInactiveTintColor: 'gray',
+      // Define a function to return the icon component
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName = 'home'; // default icon
+
+        if (route.name === 'HomeFlow') {
+          iconName = focused ? 'home' : 'home-outline';
+        } else if (route.name === 'MyBookings') {
+          iconName = focused ? 'calendar-check' : 'calendar-check-outline';
+        } else if (route.name === 'GarageFlow') {
+          iconName = focused ? 'motorbike' : 'motorbike';
+        } else if (route.name === 'Profile') {
+          iconName = focused ? 'account' : 'account-outline';
+        }
+        
+        // You can return any component that you like here!
+        return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+      },
+    })}
+  >
+    <Tab.Screen name="HomeFlow" component={HomeNavigator} options={{ title: 'Home' }} />
+    <Tab.Screen name="MyBookings" component={MyBookingsScreen} options={{ title: 'My Bookings', headerShown: true }} />
+    <Tab.Screen name="GarageFlow" component={GarageNavigator} options={{ title: 'My Garage' }} />
+    <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile', headerShown: true }} />
   </Tab.Navigator>
 );
-
 export default UserTabNavigator;

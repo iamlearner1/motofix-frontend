@@ -2,10 +2,11 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StaffBooking } from '../services/staffService'; // Import the type
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // Import the screens
 import StaffDashboardScreen from '../screens/staff/StaffDashboardScreen';
 import BookingDetailScreen from '../screens/staff/BookingDetailsScreen';
+import colors from '../config/colors';
 
 // Define the screens and their params within this stack
 export type StaffStackParamList = {
@@ -33,14 +34,23 @@ const DashboardNavigator = () => (
 );
 
 const StaffTabNavigator = () => (
-  <Tab.Navigator screenOptions={{ headerShown: false }}>
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+      tabBarActiveTintColor: colors.primary,
+      tabBarInactiveTintColor: 'gray',
+    }}
+  >
     <Tab.Screen
       name="DashboardFlow"
       component={DashboardNavigator}
-      options={{ title: 'Dashboard' }}
+      options={{
+        title: 'Dashboard',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="view-dashboard" size={size} color={color} />
+        ),
+      }}
     />
-    {/* Add other staff tabs like "Find Booking" here later */}
   </Tab.Navigator>
 );
-
 export default StaffTabNavigator;

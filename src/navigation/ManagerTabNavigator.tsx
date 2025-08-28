@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from '../config/colors';
 // Import all the manager screens that will be part of the new unified stack
 import ManagerDashboardScreen from '../screens/manager/ManagerDashboardScreen';
 import ManagementMenuScreen from '../screens/manager/ManagementMenuScreen';
@@ -56,19 +57,28 @@ const ManagementNavigator = () => (
 
 // 4. Create the final, clean Tab Navigator
 const ManagerTabNavigator = () => (
-  <Tab.Navigator screenOptions={{ 
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
       headerShown: false,
-      // You can add tab bar styling here if you like
-      // tabBarActiveTintColor: colors.primary,
-    }}>
-    <Tab.Screen 
-      name="Dashboard" 
-      component={ManagerDashboardScreen} 
-    />
+      tabBarActiveTintColor: colors.primary,
+      tabBarInactiveTintColor: 'gray',
+      tabBarIcon: ({ color, size }) => {
+        let iconName = 'shield-account'; // default
+
+        if (route.name === 'Dashboard') {
+          iconName = 'view-dashboard';
+        } else if (route.name === 'ManageFlow') {
+          iconName = 'cogs';
+        }
+        return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+      },
+    })}
+  >
+    <Tab.Screen name="Dashboard" component={ManagerDashboardScreen} />
     <Tab.Screen
       name="ManageFlow"
-      component={ManagementNavigator} // The "Manage" tab now points to our big stack
-      options={{ title: 'Manage' }}    // This is the clean label on the tab button
+      component={ManagementNavigator}
+      options={{ title: 'Manage' }}
     />
   </Tab.Navigator>
 );
