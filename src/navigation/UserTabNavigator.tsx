@@ -12,14 +12,8 @@ import AddVehicleScreen from '../screens/user/garage/AddVehicleScreen';
 import { GarageStackParamList, HomeStackParamList } from '../types/types';
 import SelectServicesScreen from '../screens/user/booking/SelectServicesScreen'
 import SelectVehicleScreen from '../screens/user/booking/SelectVehicleScreen';
-// --- Type Definitions for our Stacks ---
-// (It's good practice to define these here or in a central types file)
+import MyBookingsScreen from '../screens/user/MyBookingsScreen';
 
-// Defines the screens reachable from the "Home" tab
-
-
-// Defines the screens reachable from the "Garage" tab
-// --- Stack Navigator Components ---
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const GarageStack = createNativeStackNavigator<GarageStackParamList>();
@@ -90,6 +84,15 @@ const UserTabNavigator = () => (
       name="GarageFlow" // Use a different name for the route
       component={GarageNavigator} 
       options={{ title: 'My Garage' }} // This is the label on the tab button
+    />
+      <Tab.Screen 
+      name="MyBookings" 
+      component={MyBookingsScreen} 
+      options={{ 
+        title: 'My Bookings',
+        headerShown: true, // Show a header for this simple screen
+        headerTitleAlign: 'center',
+      }} 
     />
     {/* Add "My Bookings" and "Profile" tabs here later */}
   </Tab.Navigator>

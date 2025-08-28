@@ -15,6 +15,26 @@ export interface NewBookingData {
   issueDescription?: string;
 }
 
+export interface UserBooking {
+  _id: string;
+  vehicle: {
+    _id: string;
+    registrationNumber: string;
+  };
+  location: {
+    _id:string;
+    name: string;
+  };
+  bookedServices: {
+    _id: string;
+    name: string;
+  }[];
+  slotDate: string;
+  slotTime: string;
+  status: 'Confirmed' | 'In-Progress' | 'Completed' | 'Cancelled';
+}
+
+
 export const bookingService = {
   // Create a new booking
   createBooking: async (bookingData: NewBookingData): Promise<Booking> => {
@@ -25,8 +45,9 @@ export const bookingService = {
   },
 
   // ... keep the existing getUserHistory function
-  getUserHistory: async (): Promise<any[]> => { // Replace 'any' with a proper Booking type later
+  getUserHistory: async (): Promise<UserBooking[]> => {
     const response = await apiClient.get('/bookings');
     return response.data.data;
   },
+
 };
